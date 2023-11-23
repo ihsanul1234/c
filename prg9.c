@@ -1,31 +1,129 @@
 #include<stdio.h>
-void main()
-
-{ int a,b,option,res;
-
-printf("Enter the numbers\n");
-scanf("%d%d",&a,&b);
-printf("The options are:\n 1-sum\n 2-difference\n 3-product\n 4-division\n");
-scanf("%d",&option);
-switch(option)
+#include<stdlib.h>
+struct node
 {
-case 1:
-res=a+b;
-printf("The sum is %d\n",res);
-break;
-case 2:
-res=a-b;
-printf("The difference is %d\n",res);
-break;
-case 3: 
-res=a*b;
-printf("The product is %d\n",res);
-break;
-case 4:
-res=a/b;
-printf("%d / %d is %d \n",a,b,res);
-break;
-default:
-printf("Error\n");
-break;
-}}
+	int data;
+	struct node *prev,*next;
+};
+void main()
+{
+	int ch,no;
+	typedef struct node NODE;
+	NODE *start=NULL,*temp,*p,*t;
+	while(1)
+	{
+		printf("\nMENU\n1.Insert at beginning\n2.Insert at end\n3.Delete from beginning\n4.Delete from end\n5.Display\n6.Exit\n");
+		printf("Enter your choice : ");
+		scanf("%d",&ch);
+		switch(ch)
+		{
+			case 1:
+				temp=(NODE*)malloc(sizeof(NODE));
+				printf("Enter the No: ");
+				scanf("%d",&no);
+				temp->data=no;
+				if(start==NULL)
+				{
+					temp->prev=NULL;
+					temp->next=NULL;
+					start=temp;
+				}
+				else
+				{
+					temp->next=start;
+					start->prev=temp;
+					temp->prev=NULL;
+					start=temp;
+				}
+				break;
+			case 2:
+					temp=(NODE*)malloc(sizeof(NODE));
+					printf("Enter the no: ");
+					scanf("%d",&no);
+					temp->data=no;
+					if(start==NULL)
+					{
+						temp->prev=NULL;
+						temp->next=NULL;
+						start=temp;
+					}
+					else
+					{
+						p=start;
+						while(p->next!=NULL)
+						{
+							p=p->next;
+						}
+						p->next=temp;
+						temp->prev=p;
+						temp->next=NULL;
+					}
+					break;
+			case 3:
+				if(start==NULL)
+				{
+					printf("Deletion is not possible");
+				}
+				else if(start->next==NULL)
+				{
+					temp=start;
+					start=NULL;
+					printf("Deleted element is: %d",temp->data);
+					free(temp);
+				}
+				else
+				{
+					temp=start;
+					start=temp->next;
+					start->prev=NULL;
+					printf("Deleted element is : %d",temp->data);
+					free(temp);
+				}
+				break;
+			case 4:
+				if(start==NULL)
+				{
+					printf("Deletion not possible");
+				}
+				else if(start->next==NULL)
+				{
+					temp=start;
+					start=NULL;
+					printf("Deleted element is : %d",temp->data);
+					free(temp);
+				}
+				else
+				{
+					temp=start;
+					while(temp->next!=NULL)
+					{
+						temp=temp->next;
+					}
+					t=temp->prev;
+					t->next=NULL;
+					printf("Deleted element is : %d",temp->data);
+					free(temp);
+				}
+				break;
+			case 5:
+				if(start==NULL)
+				{
+					printf("No elements");
+				}
+				else
+				{
+					printf("\nElements are :");
+					for(p=start;p!=NULL;p=p->next)
+					{
+						printf(" %d",p->data);
+					}
+				}
+				break;
+			case 6:
+				exit(0);
+		}
+	}
+}	
+				
+							
+					
